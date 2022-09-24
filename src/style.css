@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+*{
+    font-family: Roboto;
+}
+
+h1{
+    color:brown
+}
+
+.Top{
+    display: flex;
+    background-color: blue;
+    width: 100%;
+}
+
+.Forca{
+    width: 50%;
+}
+
+.EscolherPalavra{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 50%;
+    background-color: aquamarine;
+}
+
+.EscolherPalavra button{
+    background-color: #27AE60;
+    color: white;
+    font-weight: bold;
+    font-size: 25px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    margin-top: 30px;
+    cursor: pointer;
+}
+
+.EscolherPalavra .PalavraEscolhida{
+    margin-bottom: 100px;
+    font-size: 40px;
+    letter-spacing: 8px;
+    font-weight: bold;
+}
+
+.EscolherPalavra .Hidden{
+    display: none;
+}
+
+.ImgForca{
+    width: 65%;
+}
+
+.Bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: antiquewhite;
+    width: 100%;
+}
+
+.Teclado{
+    display: flex;
+   flex-wrap: wrap;
+   justify-content: center;
+   width: 50%;
+   margin-top: 10px;
+   background-color: aquamarine;
+}
+
+.Letra{
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+    font-size: 25px;
+    background-color: #E1ECF4;
+    border: 1px solid #41a1e6;
+    color: #28648f;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.LetraDesativada{
+    background-color: #9FAAB5;
+    color: #77818d;
+    border: none;
+    cursor: auto;
+}
+
+
+
+.Chute{
+    width: 50%;
+    display: flex;
+    margin-top: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+.Chute p {
+    font-size: 20px;
+    margin: 0 20px 0 20px;
+}
+
+.Chute button{
+    font-size: 20px;
+    background-color: #E1ECF4;
+    border: 1px solid #41a1e6;
+    color: #28648f;
+    margin: 0 20px 0 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.Chute .BotaoDesativado{
+    background-color: #9FAAB5;
+    color: #77818d;
+    border: none;
+    cursor: auto;
+}
+
+.Chute input{
+    width: 50%;
+    height: 25px;
+    font-size: 20px;
+    border-radius: 5px;
+}
+
+.Chute .InputDesativado{
+    background-color: #9FAAB5;
+    border: none;
+}
