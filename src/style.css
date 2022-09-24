@@ -4,13 +4,9 @@
     font-family: Roboto;
 }
 
-h1{
-    color:brown
-}
 
 .Top{
     display: flex;
-    background-color: blue;
     width: 100%;
 }
 
@@ -24,7 +20,6 @@ h1{
     align-items: center;
     justify-content: space-between;
     width: 50%;
-    background-color: aquamarine;
 }
 
 .EscolherPalavra button{
@@ -49,6 +44,13 @@ h1{
 .EscolherPalavra .Hidden{
     display: none;
 }
+.EscolherPalavra .Red{
+    color: red;
+}
+
+.EscolherPalavra .Green{
+    color: green;
+}
 
 .ImgForca{
     width: 65%;
@@ -58,7 +60,6 @@ h1{
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: antiquewhite;
     width: 100%;
 }
 
@@ -68,7 +69,6 @@ h1{
    justify-content: center;
    width: 50%;
    margin-top: 10px;
-   background-color: aquamarine;
 }
 
 .Letra{
