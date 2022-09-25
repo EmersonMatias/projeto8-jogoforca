@@ -18,7 +18,9 @@ export default function App() {
     const [NumeroErros, setErros] = useState(0)
     const [LetrasClicadas, setLetrasClicadas] = useState([])
     const [PalavraEscondida, setPalavraEscondida] = useState("")
+    const [Chute, setChute] = useState("")
     console.log(PalavraSorteada)
+    console.log(Chute)
 
 
 
@@ -79,7 +81,7 @@ export default function App() {
             setTemPalavra(false)
             setLetrasClicadas([])
             setTimeout(() => {
-                alert("Cason queira jogar novamente, aperte o botão Escolher Palavra")
+                alert("Caso queira jogar novamente, aperte o botão Escolher Palavra")
 
             }, 200);
         }
@@ -106,34 +108,59 @@ export default function App() {
         return img
     }
 
+    function Chutar() {
+        if (Chute === PalavraSorteada) {
+            setAtiva(false)
+            setPalavraEscondida(PalavraSorteada)
+            setPalavraSorteada("X")
+            setTemPalavra(false)
+            setLetrasClicadas([])
+            setTimeout(() => {
+                alert("Caso queira jogar novamente, aperte o botão Escolher Palavra")
 
-    function LetraClicada(letra) {
-        const a = PalavraSorteada.split("")
-        setLetrasClicadas([...LetrasClicadas, letra])
-        let ca = PalavraEscondida
-        if (a.includes(letra.toLowerCase()) === true || a.includes("ã") === true || a.includes("é") === true || a.includes("í") === true
-            || a.includes("á") === true || a.includes("à") === true || a.includes("ç") === true || a.includes("ê") === true || a.includes("ú") === true) {
-            a.forEach((l, index) => {
-                if (l === "ô" || l === "ó" || l === "ò" || l === "õ" || l === "â" || l === "á" || l === "à" || l === "ã" ||
-                    l === "ê" || l === "é" || l === "è" || l === "ẽ" || l === "î" || l === "í" || l === "ì" || l === "ĩ" ||
-                    l === "û" || l === "ú" || l === "ù" || l === "ũ" || l === "ç") {
-                    function PonhaLetra(str, index, replacement) {
-                        return str.substr(0, index) + replacement + str.substr(index + replacement.length)
-                    }
-                    ca = PonhaLetra(ca, index, l)
-                    setPalavraEscondida(ca)
-                } else if (l === letra.toLowerCase()) {
-                    function PonhaLetra(str, index, replacement) {
-                        return str.substr(0, index) + replacement + str.substr(index + replacement.length)
-                    }
-                    ca = PonhaLetra(ca, index, l)
-                    setPalavraEscondida(ca)
-                }
-            })
-
-        } else {
-            setErros(NumeroErros + 1)
+            }, 200);
+            setChute("")
+        } else if (Chute !== PalavraSorteada){
+            setErros(6)
+            setChute("")
         }
+    }
+
+
+    function LetraClicada(letraDigitada) {
+        setLetrasClicadas([...LetrasClicadas, letraDigitada])
+        
+        const ListaPalavraSorteada = PalavraSorteada.split("")
+
+        let ca = PalavraEscondida;
+        
+        if (ListaPalavraSorteada.includes(letraDigitada.toLowerCase()) === true || ListaPalavraSorteada.includes("ã") === true ||
+         ListaPalavraSorteada.includes("é") === true || ListaPalavraSorteada.includes("í") === true
+        || ListaPalavraSorteada.includes("á") === true || ListaPalavraSorteada.includes("à") === true || ListaPalavraSorteada.includes("ç") === true ||
+         ListaPalavraSorteada.includes("ê") === true || ListaPalavraSorteada.includes("ú") === true) {
+        ListaPalavraSorteada.forEach((l, index) => {
+            if (l === "ô" || l === "ó" || l === "ò" || l === "õ" || l === "â" || l === "á" || l === "à" || l === "ã" ||
+                l === "ê" || l === "é" || l === "è" || l === "ẽ" || l === "î" || l === "í" || l === "ì" || l === "ĩ" ||
+                l === "û" || l === "ú" || l === "ù" || l === "ũ" || l === "ç") {
+                function PonhaLetra(str, index, replacement) {
+                    return str.substr(0, index) + replacement + str.substr(index + replacement.length)
+                }
+                ca = PonhaLetra(ca, index, l)
+                setPalavraEscondida(ca)
+            } else if (l === letraDigitada.toLowerCase()) {
+                function PonhaLetra(str, index, replacement) {
+                    return str.substr(0, index) + replacement + str.substr(index + replacement.length)
+                }
+                ca = PonhaLetra(ca, index, l)
+                setPalavraEscondida(ca)
+            }
+        })
+
+    } else {
+        setErros(NumeroErros + 1)
+    }
+
+
     }
 
 
@@ -145,8 +172,9 @@ export default function App() {
         } else if (PalavraSorteada !== null) {
             return "PalavraEscolhida"
         }
-
     }
+
+
 
 
 
@@ -164,6 +192,7 @@ export default function App() {
                     </div>
                 </div>
                 {console.log(PalavraSorteada === PalavraEscondida)}
+                {console.log("Abaixo")}
                 <div className="Bottom">
                     <div className="Teclado">
                         {alfabeto.map((letra, index) =>
@@ -177,8 +206,14 @@ export default function App() {
 
                     <div className="Chute">
                         <p>Já sei a palavra!</p>
-                        <input disabled={Ativa === false ? true : false} className={Ativa === false ? "InputDesativado" : ""}></input>
-                        <button disabled={Ativa === false ? true : false} className={Ativa === false ? "BotaoDesativado" : ""}>Chutar</button>
+                        <input
+                            disabled={Ativa === false ? true : false}
+                            className={Ativa === false ? "InputDesativado" : ""}
+                            onChange={(e) => setChute(e.target.value)}
+                            value={Chute}
+                        >
+                        </input>
+                        <button onClick={Chutar} disabled={Ativa === false ? true : false} className={Ativa === false ? "BotaoDesativado" : ""}>Chutar</button>
                     </div>
                 </div>
             </main>
