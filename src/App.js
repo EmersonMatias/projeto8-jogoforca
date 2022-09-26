@@ -19,11 +19,6 @@ export default function App() {
     const [LetrasClicadas, setLetrasClicadas] = useState([])
     const [PalavraEscondida, setPalavraEscondida] = useState("")
     const [Chute, setChute] = useState("")
-    console.log(PalavraSorteada)
-    console.log(Chute)
-
-
-
 
     function SortearPalavra() {
         let Palavra = palavras[Math.floor(Math.random() * 231)]
@@ -36,7 +31,7 @@ export default function App() {
             Palavra = Palavra.replace(Palavra[i], "_")
             i++
         }
-        console.log(Palavra)
+
 
 
         setPalavraEscondida(Palavra)
@@ -47,12 +42,6 @@ export default function App() {
 
     function erros() {
         let img;
-
-        let Test = PalavraEscondida.split("").includes("_")
-        console.log(Test)
-
-
-
 
         if (NumeroErros === 0) {
             img = forca0
@@ -81,25 +70,22 @@ export default function App() {
             setTemPalavra(false)
             setLetrasClicadas([])
             setTimeout(() => {
-                alert("Caso queira jogar novamente, aperte o botão Escolher Palavra")
+                alert("QUE PENA, VOCÊ PERDEU! Caso queira jogar novamente, aperte o botão Escolher Palavra")
 
             }, 200);
         }
         if (NumeroErros === "P") {
             img = forca6
+        }
 
-        }
-        if (NumeroErros === "G") {
-            img = forca0
-        }
-        if (PalavraEscondida === PalavraSorteada) {
+        if (PalavraEscondida === PalavraSorteada && NumeroErros !== "P") {
             setAtiva(false)
             setPalavraEscondida(PalavraSorteada)
             setPalavraSorteada("X")
             setTemPalavra(false)
             setLetrasClicadas([])
             setTimeout(() => {
-                alert("Caso queira jogar novamente, aperte o botão Escolher Palavra")
+                alert("PARABÉNS, VOCÊ GANHOU! Caso queira jogar novamente, aperte o botão Escolher Palavra")
 
             }, 200);
         }
@@ -120,49 +106,36 @@ export default function App() {
 
             }, 200);
             setChute("")
-        } else if (Chute !== PalavraSorteada){
+        } else if (Chute !== PalavraSorteada) {
             setErros(6)
             setChute("")
         }
     }
 
-
     function LetraClicada(letraDigitada) {
         setLetrasClicadas([...LetrasClicadas, letraDigitada])
-        
-        const ListaPalavraSorteada = PalavraSorteada.split("")
 
-        let ca = PalavraEscondida;
-        
-        if (ListaPalavraSorteada.includes(letraDigitada.toLowerCase()) === true || ListaPalavraSorteada.includes("ã") === true ||
-         ListaPalavraSorteada.includes("é") === true || ListaPalavraSorteada.includes("í") === true
-        || ListaPalavraSorteada.includes("á") === true || ListaPalavraSorteada.includes("à") === true || ListaPalavraSorteada.includes("ç") === true ||
-         ListaPalavraSorteada.includes("ê") === true || ListaPalavraSorteada.includes("ú") === true) {
-        ListaPalavraSorteada.forEach((l, index) => {
-            if (l === "ô" || l === "ó" || l === "ò" || l === "õ" || l === "â" || l === "á" || l === "à" || l === "ã" ||
-                l === "ê" || l === "é" || l === "è" || l === "ẽ" || l === "î" || l === "í" || l === "ì" || l === "ĩ" ||
-                l === "û" || l === "ú" || l === "ù" || l === "ũ" || l === "ç") {
-                function PonhaLetra(str, index, replacement) {
-                    return str.substr(0, index) + replacement + str.substr(index + replacement.length)
+        const ListaPalavraSorteada1 = PalavraSorteada.normalize('NFD').replace(/[\u0300-\u036f]/g, "").split("")
+        const ListaPalavraSorteada2 = PalavraSorteada.split("")
+
+
+        let MontaPalavra = PalavraEscondida;
+
+        if ((ListaPalavraSorteada1.includes(letraDigitada.toLowerCase())) === true) {
+            ListaPalavraSorteada1.forEach((letra, index) => {
+                if (letra === letraDigitada.toLowerCase()) {
+                    function PonhaLetra(str, index, replacement) {
+                        return str.substr(0, index) + replacement + str.substr(index + replacement.length)
+                    }
+                    MontaPalavra = PonhaLetra(MontaPalavra, index, ListaPalavraSorteada2[index])
+                    setPalavraEscondida(MontaPalavra)
                 }
-                ca = PonhaLetra(ca, index, l)
-                setPalavraEscondida(ca)
-            } else if (l === letraDigitada.toLowerCase()) {
-                function PonhaLetra(str, index, replacement) {
-                    return str.substr(0, index) + replacement + str.substr(index + replacement.length)
-                }
-                ca = PonhaLetra(ca, index, l)
-                setPalavraEscondida(ca)
-            }
-        })
+            })
 
-    } else {
-        setErros(NumeroErros + 1)
+        } else {
+            setErros(NumeroErros + 1)
+        }
     }
-
-
-    }
-
 
     function EscolheCor() {
         if (NumeroErros === "P") {
@@ -175,24 +148,25 @@ export default function App() {
     }
 
 
-
-
-
-
     return (
         <>
             <main>
                 <div className="Top">
                     <div className="Forca">
-                        <img className="ImgForca" src={erros()} alt="Imagem" />
+                        <img className="ImgForca" src={erros()} alt="Imagem" data-identifier="game-image"/>
                     </div>
                     <div className="EscolherPalavra">
-                        <button onClick={TemPalavra === false ? SortearPalavra : () => alert("Sua palavra já foi sorteada")}>Escolher Palavra</button>
-                        <div className={PalavraSorteada === null ? "PalavraEscolhida Hidden" : EscolheCor()}>{PalavraEscondida}</div>
+                        <button
+                            onClick={TemPalavra === false ? SortearPalavra : () => alert("Sua palavra já foi sorteada")}
+                            data-identifier="choose-word">
+                            Escolher Palavra
+                        </button>
+                        <div className={PalavraSorteada === null ? "PalavraEscolhida Hidden" : EscolheCor()}
+                        data-identifier="word">
+                            {PalavraEscondida}</div>
                     </div>
                 </div>
-                {console.log(PalavraSorteada === PalavraEscondida)}
-                {console.log("Abaixo")}
+
                 <div className="Bottom">
                     <div className="Teclado">
                         {alfabeto.map((letra, index) =>
@@ -200,6 +174,7 @@ export default function App() {
                                 onClick={() => LetraClicada(letra)}
                                 disabled={Ativa === false || LetrasClicadas.includes(letra) === true ? true : false}
                                 className={Ativa === false || LetrasClicadas.includes(letra) === true ? "Letra LetraDesativada" : "Letra"}
+                                data-identifier="letter"
                                 key={index}> {letra}
                             </button>)}
                     </div>
@@ -211,9 +186,16 @@ export default function App() {
                             className={Ativa === false ? "InputDesativado" : ""}
                             onChange={(e) => setChute(e.target.value)}
                             value={Chute}
+                            data-identifier="type-guess"
                         >
                         </input>
-                        <button onClick={Chutar} disabled={Ativa === false ? true : false} className={Ativa === false ? "BotaoDesativado" : ""}>Chutar</button>
+                        <button
+                            onClick={Chutar}
+                            disabled={Ativa === false ? true : false}
+                            className={Ativa === false ? "BotaoDesativado" : ""}
+                            data-identifier="guess-button">
+                            Chutar
+                        </button>
                     </div>
                 </div>
             </main>
