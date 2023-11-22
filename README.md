@@ -12,3 +12,4 @@ Este projeto visa criar uma versão digital do jogo da forca, oferecendo uma exp
 * HTML
 * CSS
 * Git e GitHub
+* React
